@@ -1,0 +1,17 @@
+Makefile.in
+Makefile
+.deps
+*.o
+.#*
+*.so
+
+INSTALL
+README
+
+# autoblah
+/m4/
+/aux/
+/config.*
+/configure
+/autom4te.cache
+/aclocal.m4

@@ -30,4 +30,8 @@ compile: $(OBJS)
 clean:
 	$(RM) -f $(OBJS) $(TARGET)
 
-all: compile
+all: $(TARGET)
+
+install: $(TARGET)
+	cp -u $(TARGET) /usr/local/bin
+

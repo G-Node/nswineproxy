@@ -1,0 +1,5 @@
+Need to install MFC 42 for nsAOLibrary.dll
+
+Can be done using winetricks:
+winetricks mfc42
+

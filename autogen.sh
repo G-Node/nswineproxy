@@ -5,7 +5,7 @@ set -e
 if [ "$1" = "clean" ]; then
   rm -f aclocal.m4 configure config.* `find . -name Makefile.in` libtool
   rm -rf autom4te.cache m4 aux
-  rm -rf README INSTALL
+  rm -rf INSTALL
   exit
 fi
 

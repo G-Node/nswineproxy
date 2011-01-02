@@ -21,6 +21,8 @@ AC_ARG_WITH(neuroshare_libs_dir, [  --with-neuroshare-libs-dir=PATH choose direc
 AC_SUBST(neurosharelibsdir)
 
 PKG_CHECK_MODULES(glib, glib-2.0 >= 2.24)
+PKG_CHECK_MODULES(gio, gio-2.0 >= 2.24)
+PKG_CHECK_MODULES(gthread, gthread-2.0 >= 2.24)
 
 AC_CONFIG_FILES([
   library/Makefile

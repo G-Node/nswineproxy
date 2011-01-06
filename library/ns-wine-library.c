@@ -412,7 +412,6 @@ socket_receive_all (GSocket *sock, void *buffer, gsize len, GError **error)
     }
  
   return TRUE;
-  
 }
 
 
@@ -437,7 +436,7 @@ socket_receive_message (GSocket *sock, GError **error)
     }
 
   n_left =  ns_msg_get_body_size (msg);
-
+ 
   while (n_left > 0) 
     {
       gssize n;      
@@ -457,8 +456,9 @@ socket_receive_message (GSocket *sock, GError **error)
 	  ns_msg_free (msg);
 	  return NULL;
 	}
-
+     
       n_left = ns_msg_body_read_from_wire (msg, buf, (size_t) n);
+
     }
 
   /* ns_msg_dump (msg); */

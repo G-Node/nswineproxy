@@ -4,6 +4,8 @@ Makefile
 *.o
 .#*
 *.so
+*.exe
+*.bkp
 
 INSTALL
 README

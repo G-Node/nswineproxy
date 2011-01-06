@@ -189,10 +189,11 @@ ns_msg_body_read_from_wire (NsMsg      *msg,
   len = MIN (len, body_size - msg->len);
 
   memcpy (bufptr + msg->len, buffer, len);
-  fprintf (stderr, "+ ns_msg_body_read_from_wire: %u %u\n", msg->len, len);
-
   msg->len += len;
-  return body_size - len;
+  
+  //fprintf (stderr, "+ ns_msg_body_read_from_wire: %u %u: %u\n", msg->len, len, body_size - msg->len);
+  
+  return body_size - msg->len;
 }
 
 void
@@ -274,13 +275,13 @@ ns_msg_body_ensure_space (NsMsg *msg, uint32 space_request)
 
   if (new_size > msg->allocated)
     {
-      //fprintf (stderr, "Need to increase buffer size !\n");
-      /* FIXME check for overflow!! */
       size_t new_buffer_size = msg->allocated > 0 ? (msg->allocated << 1) : 256;
       //fprintf (stderr, "Increasing buffer size: %u to %u\n", msg->allocated, new_buffer_size);
-      msg->body = g_realloc (msg->body, new_buffer_size);
-      
+      msg->body = g_realloc (msg->body, new_buffer_size);    
       msg->allocated = new_buffer_size;
+      
+      if (msg->body == NULL)
+	  fprintf (stderr, "CRITICAL: could not reallocate memory!\n");
     }
 
 }
@@ -419,7 +420,6 @@ ns_msg_pack_poly (NsMsg *msg, NsTypeId first_type, ...)
 	
       case NS_TYPE_UINT8:
 	ui_val = va_arg (ap, unsigned int);
-	fprintf (stderr, "PLOY: uint8: %hhu\n", (uint8) ui_val);
 	ns_msg_pack_uint8 (msg, (uint8) ui_val);
 	break;
 
@@ -519,7 +519,6 @@ ns_msg_read_poly (NsMsg *msg, NsTypeId first_type, ...)
 	buf_ptr = va_arg (ap, char *);
 
 	ns_msg_read_string (msg, &pos, buf_ptr, buf_len); /* FIXME: check error */
-	fprintf (stderr, "char-a: %p [%d] (%s)\n", buf_ptr, pos, buf_ptr);
 	break;
 
       case NS_TYPE_ARRAY:
@@ -776,7 +775,7 @@ ns_msg_dump (NsMsg *msg)
       unsigned char c = ptr[i];
 
       if (i % 16 == 0)
-        fprintf (stderr, " %3d: ", 0);
+        fprintf (stderr, " %3d: ", i);
 
       fprintf (stderr, "%02hhX ", c);
 
@@ -787,7 +786,7 @@ ns_msg_dump (NsMsg *msg)
 
       if (i % 16 == 15)
 	{
-	  fprintf (stderr, " | %s\n: ", buf);
+	  fprintf (stderr, " | %s\n ", buf);
 	  memset (buf, 0, sizeof (buf));
 	}
       else if (i % 4 == 3)
@@ -795,7 +794,7 @@ ns_msg_dump (NsMsg *msg)
     }
 
   if (buf[0] != '\0')
-    fprintf (stderr, "%*s| %s\n: ", strlen (buf), "", buf);
+    fprintf (stderr, "%*s| %s\n ", 34 - strlen (buf), " ", buf);
   
   fprintf (stderr, "\n");
  out:

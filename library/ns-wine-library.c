@@ -1153,9 +1153,13 @@ ns_RESULT ns_GetAnalogData (uint32  file_id,
   fh = library_lookup_file_handle (ctx, file_id);
 
   if (fh == NULL)
-    return ns_BADFILE;
-  
+    {
+      g_private_set (ctx->error_private, "File Handle not found!");
+      return ns_BADFILE;
+    }
+
   msg = ns_msg_new_call (NS_REQ_NS_GET_ANALOG_DATA, 0);
+
   ns_msg_pack_poly (msg,
 		    NS_TYPE_UINT32, fh->remote_id,
 		    NS_TYPE_UINT32, EntityID,

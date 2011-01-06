@@ -82,6 +82,7 @@ ns_msg_new_sized (NsMsgType type, NsReqId req_id, NsMsgFlags flags, size_t data_
   msg->body = g_malloc (buffer_size);
   msg->allocated = buffer_size;
   msg->len = 0;
+  msg->sealed = FALSE;
     
   return msg;
 }

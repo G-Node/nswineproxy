@@ -16,5 +16,4 @@ nsWineLibrary_so_LDFLAGS = -module -avoid-version -shared
 nsWineLibrary_so_SOURCES = \
 	../common/nsWireProtocol.c \
 	ns-wine-library.c  \
-	wire-iclient.c     \
 	$(NULL)

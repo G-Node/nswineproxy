@@ -294,7 +294,7 @@ library_new_file_handle (LibraryContext *ctx, const char *filename)
   g_mutex_lock (ctx->file_handle_lock);
   fh->ctx = ctx;
 
-  fh->id = ctx->file_handle_count++;
+  fh->id = ++ctx->file_handle_count;
   fh->cookie = g_compute_checksum_for_string (G_CHECKSUM_MD5,
 					      filename, -1);
 

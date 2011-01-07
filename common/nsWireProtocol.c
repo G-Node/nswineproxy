@@ -795,7 +795,7 @@ ns_msg_dump (NsMsg *msg)
     }
 
   if (buf[0] != '\0')
-    fprintf (stderr, "%*s| %s\n ", 34 - strlen (buf), " ", buf);
+    fprintf (stderr, "%*s| %s\n ", (int) (34 - strlen (buf)), " ", buf);
   
   fprintf (stderr, "\n");
  out:

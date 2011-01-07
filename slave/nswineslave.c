@@ -303,9 +303,10 @@ connect_to_lib (_TCHAR *port, SOCKET *sock_out)
     }
   
   freeaddrinfo (result);
-  
+
   if (ptr == NULL)
     {
+      fprintf (stderr, "<NSWS> [E]Could not connect to lib: %d\n", res); 
       WSACleanup ();
       return 1;
     }

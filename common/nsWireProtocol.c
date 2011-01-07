@@ -680,7 +680,7 @@ ns_msg_read_string (NsMsg *msg, int *pos, char *buf, size_t len)
       return -1;
     }
 
-  fprintf (stderr, "ns_msg_read_string: str lengths: %u, %u\n", msg_str_len, len);
+  //fprintf (stderr, "ns_msg_read_string: str lengths: %u, %u\n", msg_str_len, len);
   if (msg_str_len > len)
     return -2; /*don't modify pos here */
 

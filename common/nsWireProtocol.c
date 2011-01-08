@@ -403,7 +403,6 @@ ns_msg_pack_poly (NsMsg *msg, NsTypeId first_type, ...)
   NsTypeId cur_type;
   unsigned int   ui_val;
   int             i_val;
-  //int32     i_val;
   double    d_val;
   unsigned int buf_len;
   char *buf_ptr;

@@ -242,7 +242,7 @@ do_handshake (SOCKET sock, const char *cookie)
   size_t data_size;
   int res;
 
-  fprintf (stderr, "doing handshake!\n");
+  fprintf (stderr, "<NSWS> [D] Doing handshake!\n");
 
   data_size = strlen (cookie) + 1;
 
@@ -252,6 +252,7 @@ do_handshake (SOCKET sock, const char *cookie)
 
   res = socket_send_message (sock, msg);
 
+  fprintf (stderr, "<NSWS> [D] Message sent: %i!\n", res);
   return res;
 }
 
@@ -724,7 +725,7 @@ process_get_analog_data (NsMsg *msg)
 
   ns_msg_pack_raw_finish (reply, data_size);
   ns_msg_pack_uint32 (reply, cont_count);
-
+  
   return reply;
 }
 

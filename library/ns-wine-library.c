@@ -461,7 +461,6 @@ socket_receive_message (GSocket *sock, GError **error)
 
     }
 
-  /* ns_msg_dump (msg); */
   return msg;
 }
 

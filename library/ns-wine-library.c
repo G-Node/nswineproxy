@@ -224,7 +224,7 @@ file_handle_set_socket (FileHandle *fh, GSocket *sock)
 
   g_mutex_lock (ctx->file_handle_lock);
 
-  fh->sock = sock;
+  fh->sock = g_object_ref (sock);
   fh->is_ready = TRUE; //FIXME useless, use socket?
 
   g_cond_broadcast (ctx->file_handle_cond);
@@ -632,6 +632,7 @@ listener_loop (gpointer user_data)
   g_cond_signal (ctx->listen_cond);
   g_mutex_unlock (ctx->listen_lock);
 
+  g_debug ("Waiting for slaves to connecto to port %u", ctx->listen_port);
   while ((client = g_socket_accept (sock, NULL, &error))) {
     GError      *cli_error = NULL;
 
@@ -639,6 +640,7 @@ listener_loop (gpointer user_data)
     res = connection_do_handshake (ctx, client, &cli_error);
     g_debug ("\tHandshake %s", res ? "succeeded" : "failed");
 
+    g_object_unref (client);
   }
 
   g_debug ("Done listening!\n");

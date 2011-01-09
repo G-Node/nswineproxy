@@ -1,5 +1,92 @@
-Need to install MFC 42 for nsAOLibrary.dll
+Neuroshare G-Node Wine-Proxy Library
+====================================
 
-Can be done using winetricks:
-winetricks mfc42
+Use Neuroshare Libraries for Windows on Unix(-like) Systems.
 
+Overview
+--------
+
+The Neuroshare API is an standardize API for accessing 
+neurophysiology data stored in vendor-specific binary formats
+in a vendor-neutral way.
+This is done with the help of so called "Neuroshare Libraries"
+that are provided by the manufactures. With very few exceptions
+these Libraries are only available for the Windows Platform.
+
+The goal of this project is to make these libraries also
+available on UNIX. This is done by providing an implementation
+of the Neuroshare API, that is fully compliant with the library
+specification; it will transparently forward all calls it 
+receives to a small windows helper program running inside
+wine that will in turn make this calls on the vendor provided
+library needed for specific data file.
+In short the G-Node Wine-Proxy Library is a smart transparent
+proxy library.
+
+
+Installation
+------------
+
+The compile-time requirements are:
+    - glib (including gthread & gio) version  =< 2.42
+    - the MinGW cross compiler
+
+Additional runtime dependencies:
+    - Wine
+    - The vendor DLLs for the specific data file(s)!
+      See below 'Installation of vendor DLLs'
+
+Brief install steps:
+
+  % ./configure			# run the `configure' script
+  % make			# build phase
+  % sudo make install		# installation
+     or
+  % make install 				
+ 
+See the file 'INSTALL' for more detailed information.
+
+
+Installation of vendor DLLs
+- - - - - - - - - - - - - -
+
+It is very important to note that with without the
+installation of the vendor DLLs the library cannot read
+any data files. Therefore the the DLLs for must be
+downloaded and installed into one of the following
+locations:
+	/usr/local/lib/neuroshare
+	/usr/lib/neuroshare
+	~/.neuroshare
+
+A (possibly incomplete) list of the vendor specific DLLs
+can be obtained be obtained from the neuroshare website:
+  http://neuroshare.sourceforge.net/DLLLinks.shtml
+
+Some of the libraries require additional components to
+function properly, e.g. the Visual C++ runtime. The
+easiest way to install those is to use the 'winetricks'
+helper program:
+       http://wiki.winehq.org/winetricks
+
+
+* List of DLLs and required winetricks package:
+
+nsAOLibrary.dll    	    'vcrun6' or 'vcrun6sp6'
+nsNEVLibrary.dll	    'vcrun2003'
+
+Reporting Bugs & Submitting Patches
+-----------------------------------
+Detailed debugging information can be obtained by defining
+the NS_LIB_DEBUG enviroment variable:
+
+    % export NS_LIB_DEBUG=1
+
+The output can easily be saved to a file by piping the
+standard error to a file:
+
+    % program 2> error.log
+
+Currently there is no bug tracking system available thus
+the best option is to send a mail to:
+     kellner@bio.lmu.de

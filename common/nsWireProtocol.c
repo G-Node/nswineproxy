@@ -552,7 +552,7 @@ ns_msg_body_peek_at (NsMsg *msg, int pos)
 
   body_size = ns_msg_get_body_size (msg);
 
-  if (body_size < pos)
+  if (! (body_size > pos + 1)) /* pos starts at 0, bodys_size at 1 */
     return NULL;
 
 

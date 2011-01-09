@@ -63,6 +63,7 @@ static FTEntry known_file_types[] = {
   {"plx", "nsPlxLibrary.dll"},
   {"map", "nsAOLibrary.dll" },
   {"nev", "nsNEVLibrary.dll"},
+  {"nex", "NeuroExplorerNeuroShareLibrary.dll"},
   {NULL, }
 };
 
@@ -72,6 +73,7 @@ static DllInfo dll_infos[] = {
   {"nsNEVLibrary.dll", NULL},
   {"nsPlxLibrary.dll", NULL},
   {"nsTDTLib.dll",     NULL},
+  {"NeuroExplorerNeuroShareLibrary.dll", NULL},
   {NULL, NULL}
 };
 

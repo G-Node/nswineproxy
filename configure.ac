@@ -36,6 +36,7 @@ PKG_CHECK_MODULES(gthread, gthread-2.0 >= 2.24)
 AC_CONFIG_FILES([
   library/Makefile
   slave/Makefile
+  tests/Makefile
   Makefile
 ])
 

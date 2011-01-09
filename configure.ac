@@ -19,6 +19,13 @@ if test "$CROSSCC" == "no"; then
    AC_MSG_ERROR([Could not find MinGW cross compiler])
 fi
 
+AC_CHECK_PROGS(WINE, wine, no)
+if test "$WINE" == "no"; then
+   AC_MSG_WARN([Wine binary not found!])
+   AC_MSG_WARN([Compilation will work without wine but the library])
+   AC_MSG_WARN([will NOT WORK without a working wine binary in your PATH])
+fi
+
 AC_ARG_WITH(neuroshare_libs_dir, [  --with-neuroshare-libs-dir=PATH choose directory for the Neuroshare libraries, [default=LIBDIR/neuroshare]], neurosharelibsdir="$withval", neurosharelibsdir=${libdir}/neuroshare)
 AC_SUBST(neurosharelibsdir)
 

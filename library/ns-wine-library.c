@@ -831,6 +831,19 @@ ns_OpenFile (char *filename, uint32 *file_id)
   if (res == FALSE)
     return ns_LIBERROR;
 
+  ns_msg_free (msg);
+
+  if (ns_msg_is_error (reply))
+    {
+      ns_res = ns_result_from_error_msg (fh, reply);
+      ns_msg_free (reply);
+      return ns_res;
+    }
+
+  ns_msg_free (reply);
+
+  /* library successfully loaded, now open the file */
+
   msg = ns_msg_new_call (NS_REQ_NS_OPEN_FILE, 0);
   path_win32 = path_convert_to_win32 (filename);
   ns_msg_pack_string (msg, path_win32, -1);

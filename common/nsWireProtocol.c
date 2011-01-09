@@ -786,7 +786,7 @@ ns_msg_dump (NsMsg *msg)
 
       if (i % 16 == 15)
 	{
-	  fprintf (stderr, " | %s\n ", buf);
+	  fprintf (stderr, " | %s\n", buf);
 	  memset (buf, 0, sizeof (buf));
 	}
       else if (i % 4 == 3)
@@ -794,7 +794,7 @@ ns_msg_dump (NsMsg *msg)
     }
 
   if (buf[0] != '\0')
-    fprintf (stderr, "%*s| %s\n ", (int) (34 - strlen (buf)), " ", buf);
+    fprintf (stderr, "%*s| %s\n ", (int) (52 - 3*(i % 16)), " ", buf);
   
   fprintf (stderr, "\n");
  out:

@@ -11,7 +11,7 @@ install_sh = @install_sh@
 CC = @CROSSCC@ 
 RM = rm
 
-INCLUDES = -I ../../common -I ../common
+INCLUDES = -I ../../common -I $(top_srcdir)/common
 DEBUG = -dbg
 TARGET = nswineslave.exe
 LIBS = -lws2_32
@@ -23,7 +23,7 @@ SRCS = $(OBJS:.o=.c)
 $(TARGET) : $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(TARGET) $(OBJS) $(LIBS)
 
-nsWireProtocol.o: ../common/nsWireProtocol.c
+nsWireProtocol.o: $(top_srcdir)/common/nsWireProtocol.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 %.o : %.c
@@ -38,4 +38,6 @@ all: $(TARGET)
 
 install: $(TARGET)
 	cp -u $(TARGET) /usr/local/bin
+
+check: all
 

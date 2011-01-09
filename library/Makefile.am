@@ -14,6 +14,6 @@ neurosharelibs_PROGRAMS=nsWineLibrary.so
 nsWineLibrary_so_LDADD = $(glib_LIBS) $(gio_LIBS) $(gthread_LIBS)
 nsWineLibrary_so_LDFLAGS = -module -avoid-version -shared
 nsWineLibrary_so_SOURCES = \
-	../common/nsWireProtocol.c \
+	$(top_srcdir)/common/nsWireProtocol.c \
 	ns-wine-library.c  \
 	$(NULL)

@@ -9,6 +9,12 @@
 # define _POSIX_
 #endif
 
+#include <stdio.h>
+#include <string.h>
+#include <direct.h> /* _getcwd() */
+#include <stddef.h>
+
+
 #define WIN32_LEAN_AND_MEAN 
 #include <tchar.h>
 
@@ -16,12 +22,6 @@
 #include <ws2tcpip.h>
 
 #include <windows.h>
-#include <stdio.h>
-#include <string.h>
-
-#include <direct.h> /* _getcwd() */
-
-#include <stddef.h>
 
 #include <nsAPItypes.h>
 #include <nsAPIdllimp.h>
@@ -395,7 +395,8 @@ process_load_lib (NsMsg *msg)
 
   if (lib_path == NULL || pos == -1)
     {
-      reply = ns_msg_new_error (msg, NS_ERROR_BAD_ARGUMENTS, NULL);
+      reply = ns_msg_new_error (msg, NS_ERROR_BAD_ARGUMENTS,
+				"Invalid library path");
       return reply;
     }
 
@@ -408,7 +409,8 @@ process_load_lib (NsMsg *msg)
   if (res < 0)
     {
       res *= -1;
-      reply = ns_msg_new_error (msg, NS_ERROR_FAILED, NULL);
+      reply = ns_msg_new_error (msg, NS_ERROR_FAILED,
+				"Could not load library");
       return reply;
     }
 

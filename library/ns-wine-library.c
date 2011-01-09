@@ -338,10 +338,11 @@ ns_result_from_error_msg (FileHandle *fh, NsMsg *error_msg)
       return ns_LIBERROR;
     }
 
-  if (error_id > 0) 
-    ns_res = ns_LIBERROR; /* FIXME: appropriate error id or do it in the slave? */
-  else
+  if (error_id < 0)
     ns_res = error_id;
+  else
+     ns_res = ns_LIBERROR;
+     /* FIXME: appropriate error id or do it in the slave? */
 
   err_str = ns_msg_read_dup_string (error_msg, &pos);
 

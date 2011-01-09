@@ -85,10 +85,10 @@ extern "C"
     
     NS_ERROR_TYPE          = -2, // ns_TYPEERROR
     NS_ERRRO_LIB           = -1, // ns_LIBERROR,
-   
-    NS_ERROR_FAILED        = 0,
-    NS_ERROR_UNKOWN_CALL   = 1,
-    NS_ERROR_BAD_ARGUMENTS = 2
+
+    NS_ERROR_FAILED        = 1,
+    NS_ERROR_UNKOWN_CALL   = 2,
+    NS_ERROR_BAD_ARGUMENTS = 3
 
   } NsErrorId;
 

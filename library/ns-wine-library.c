@@ -136,9 +136,8 @@ find_dll_by_name (const char *dll_name)
     g_free (location);
     location = g_build_filename (c_dir, dll_name, NULL);
     found = g_file_test (location, G_FILE_TEST_EXISTS);
-    g_debug ("Testing wether %s exists: %s", location, found ? "yes" : "no");
-    c_dir = *c_iter++;
 
+    c_dir = *c_iter++;
 
   } while (found == FALSE && c_dir != NULL);
 
@@ -191,11 +190,12 @@ get_dll_for_file (const char *filename)
 }
 
 static void
-scan_for_libraries (void)
+scan_for_libraries (LibraryContext *ctx)
 {
   DllInfo *dll;
 
-  g_debug ("Scanning for dlls");
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Scanning for dlls");
 
   for (dll = dll_infos; dll->name != NULL; dll++)
     {
@@ -209,7 +209,9 @@ scan_for_libraries (void)
 	continue;
 
       dll->location = win_path;
-      g_debug ("Found %s at %s\n", dll->name, dll->location);
+
+       if (G_UNLIKELY (ctx->debug))
+	 g_debug ("Found %s at %s\n", dll->name, dll->location);
     }
 }
 
@@ -241,13 +243,18 @@ file_handle_wait_for_connection (FileHandle *fh,
   ctx = fh->ctx;
 
   g_mutex_lock (ctx->file_handle_lock);
-  g_debug ("Waiting for connection ... (%u)", fh->id);
+
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Waiting for connection ... (%u)", fh->id);
 
   while (fh->is_ready == FALSE)
     g_cond_wait (ctx->file_handle_cond, ctx->file_handle_lock);
 
   g_mutex_unlock (ctx->file_handle_lock);
-  g_debug ("Connection now ready");
+
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Connection now ready");
+
   return TRUE;
 }
   
@@ -260,7 +267,9 @@ file_handle_destroy (FileHandle *fh)
   ctx = fh->ctx;
   
   g_mutex_lock (ctx->file_handle_lock);
-  g_debug ("Destroying Handle  (%u).", fh->id);
+
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Destroying Handle  (%u).", fh->id);
   
   res = g_hash_table_remove (ctx->file_handle_map, &(fh->id));
 
@@ -301,7 +310,8 @@ library_new_file_handle (LibraryContext *ctx, const char *filename)
   g_hash_table_insert (ctx->file_handle_map, &(fh->id), fh);
   g_mutex_unlock (ctx->file_handle_lock);
 
-  g_debug ("New FileHandle %p %u (%s)", fh, fh->id, fh->cookie);
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("New FileHandle %p %u (%s)", fh, fh->id, fh->cookie);
 
   return fh;
 }
@@ -332,8 +342,6 @@ ns_result_from_error_msg (FileHandle *fh, NsMsg *error_msg)
     ns_res = ns_LIBERROR; /* FIXME: appropriate error id or do it in the slave? */
   else
     ns_res = error_id;
-
-  g_debug ("Error ID: %d %d", ns_res, error_id);
 
   err_str = ns_msg_read_dup_string (error_msg, &pos);
 
@@ -569,11 +577,8 @@ connection_do_handshake (LibraryContext *ctx, GSocket *sock, GError **error)
   pos = 0;
 
   cookie = ns_msg_read_dup_string (msg, &pos);
-  g_debug ("Client cookie: %s", cookie);
 
   fh = library_lookup_file_handle_by_cookie (ctx, cookie);
-
-  g_debug ("File Handle: %p", fh);
   if (fh == NULL)
     {
       g_warning ("Unkown file handle!");
@@ -632,18 +637,25 @@ listener_loop (gpointer user_data)
   g_cond_signal (ctx->listen_cond);
   g_mutex_unlock (ctx->listen_lock);
 
-  g_debug ("Waiting for slaves to connecto to port %u", ctx->listen_port);
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Waiting for slaves to connecto to port %u", ctx->listen_port);
+
   while ((client = g_socket_accept (sock, NULL, &error))) {
     GError      *cli_error = NULL;
 
-    g_debug ("New Client");
+    if (G_UNLIKELY (ctx->debug))
+      g_debug ("New Client");
+
     res = connection_do_handshake (ctx, client, &cli_error);
-    g_debug ("\tHandshake %s", res ? "succeeded" : "failed");
+    
+    if (G_UNLIKELY (ctx->debug))
+      g_debug ("\tHandshake %s", res ? "succeeded" : "failed");
 
     g_object_unref (client);
   }
 
-  g_debug ("Done listening!\n");
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Done listening!\n");
 
   return NULL;
 }
@@ -666,20 +678,15 @@ initialize_library_context (gpointer user_data)
   if (!g_thread_supported ())
     g_thread_init (NULL);
 
-  scan_for_libraries ();
-
   ctx = g_new0 (LibraryContext, 1);
-
-  g_debug ("Checking alignment... %s!  (%zu [%zu %zu %zu %zu %zu])",
-	   NS_CHECK_HDR_ALIGNMENT() == 1 ? "pass" : "FAILDED",
-	   sizeof (NsMsgHeader), offsetof (NsMsgHeader, size),
-	   offsetof (NsMsgHeader, serial), offsetof (NsMsgHeader, type),
-	   offsetof (NsMsgHeader, flags), offsetof (NsMsgHeader, req_id));
 
   debug_env = g_getenv ("NS_LIB_DEBUG");
   if (debug_env)
     ctx->debug = TRUE;
-  g_debug ("%s", debug_env);
+
+  scan_for_libraries (ctx);
+
+  g_assert (NS_CHECK_HDR_ALIGNMENT());
 
   /* Per thread error message storage */
   ctx->error_private = g_private_new (error_private_free);

@@ -142,7 +142,6 @@ ns_msg_new_error (NsMsg *call_msg, int32 error_id, const char *error_str)
     {
       req_id = ns_msg_get_req_id (call_msg);
       serial = ns_msg_get_serial (call_msg);
-      fprintf (stderr, "New Error msg! Serial: %u\n", serial);
     }
 
   str_size = error_str ? strlen (error_str) + 1 : 0;

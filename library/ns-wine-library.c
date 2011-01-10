@@ -796,7 +796,7 @@ ns_OpenFile (char *filename, uint32 *file_id)
     }
 
   argv[0] = (char *) "wine";
-  argv[1] = (char *) "/usr/local/bin/nswineslave";
+  argv[1] = (char *) NS_LIBS_DIR "/nswineslave";
   argv[2] = port_str = g_strdup_printf ("%u", ctx->listen_port);
   argv[3] = fh->cookie;
   argv[4] = NULL;

@@ -6,7 +6,8 @@ INCLUDES = 	-I$(top_srcdir)/../common \
 	 	$(glib_CFLAGS) \
 		$(gio_CFLAGS) \
 		$(gthread_CFLAGS) \
-		-DG_LOG_DOMAIN=\"NsWineLib\"
+		-DG_LOG_DOMAIN=\"NsWineLib\" \
+		-DNS_LIBS_DIR="\"${neurosharelibsdir}\""
 		$(NULL)
 
 neurosharelibs_PROGRAMS=nsWineLibrary.so

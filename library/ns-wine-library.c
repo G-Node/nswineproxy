@@ -946,9 +946,8 @@ ns_GetFileInfo (uint32 file_id, ns_FILEINFO *FileInfo, uint32 FileInfoSize)
 		    NS_TYPE_UINT32, &FileInfo->dwTime_Min,
 		    NS_TYPE_UINT32, &FileInfo->dwTime_Sec,
 		    NS_TYPE_UINT32, &FileInfo->dwTime_MilliSec,
-		    NS_TYPE_CHAR_ARRAY, 256, FileInfo->szFileType,
+		    NS_TYPE_CHAR_ARRAY, 256, FileInfo->szFileComment,
 		    NS_TYPE_NONE);
-
 
   return ns_OK;
 }

@@ -24,6 +24,20 @@ In short the G-Node Wine-Proxy Library is a smart transparent
 proxy library.
 
 
+Usage
+-----
+
+As the supplied library 'nsWineLibrary' is a fully compliant
+neuroshare DLL that acts as a drop-in  replacement, just use
+it instead of the vendor DLL that would normally be needed to
+open the data file. The library itself will decide (by look-
+ing at the file extension of the file to open) which vendor
+DLL it needs for that very data file and load that DLL in the
+background (inside the Wine environment).
+Of course you need to install the specific vendor DLLs so they
+can be found by 'nsWineLibrary' (see below).
+
+
 Installation
 ------------
 
@@ -74,6 +88,7 @@ helper program:
 
 nsAOLibrary.dll    	    'vcrun6' or 'vcrun6sp6'
 nsNEVLibrary.dll	    'vcrun2003'
+
 
 Reporting Bugs & Submitting Patches
 -----------------------------------

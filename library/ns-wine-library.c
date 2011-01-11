@@ -337,7 +337,7 @@ ns_result_from_error_msg (FileHandle *fh, NsMsg *error_msg)
 
   if (pos < 0)
     {
-      g_private_set (ctx->error_private, g_strdup ("Internal Error"));
+      g_private_set (ctx->error_private, (gpointer) g_strdup ("Internal Error"));
       return ns_LIBERROR;
     }
 
@@ -350,9 +350,9 @@ ns_result_from_error_msg (FileHandle *fh, NsMsg *error_msg)
   err_str = ns_msg_read_dup_string (error_msg, &pos);
 
   if (err_str == NULL)
-    g_private_set (ctx->error_private, g_strdup ("Unkown Error"));
+    g_private_set (ctx->error_private, (gpointer) g_strdup ("Unkown Error"));
   else
-    g_private_set (ctx->error_private, err_str);
+    g_private_set (ctx->error_private, (gpointer) err_str);
 
   return ns_res;
 }
@@ -1184,7 +1184,7 @@ ns_RESULT ns_GetAnalogData (uint32  file_id,
 
   if (fh == NULL)
     {
-      g_private_set (ctx->error_private, "File Handle not found!");
+      g_private_set (ctx->error_private, (gpointer) "File Handle not found!");
       return ns_BADFILE;
     }
 

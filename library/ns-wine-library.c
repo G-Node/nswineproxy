@@ -78,6 +78,7 @@ static DllInfo dll_infos[] = {
 };
 
 
+void initialize_library (void) __attribute__((constructor));
 
 static char *
 path_convert_to_win32 (const char *path)
@@ -670,6 +671,15 @@ error_private_free (gpointer data)
   g_free (data); 
 }
 
+void
+initialize_library (void)
+{
+  if (!g_thread_supported ())
+    g_thread_init (NULL);
+  
+  g_type_init ();
+}
+
 static gpointer
 initialize_library_context (gpointer user_data)
 {
@@ -677,9 +687,6 @@ initialize_library_context (gpointer user_data)
   GThread        *listener_thread;
   GError         *error = NULL;
   const char     *debug_env;
-
-  if (!g_thread_supported ())
-    g_thread_init (NULL);
 
   ctx = g_new0 (LibraryContext, 1);
 

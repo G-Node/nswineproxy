@@ -23,7 +23,7 @@
 #ifndef _NS_WINE_LIBRARY_H_
 #define _NS_WINE_LIBRARY_H_
 
-#include <neuroshare.h>
+#include <nsAPItypes.h>
 #include <nsWireProtocol.h>
 
 

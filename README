@@ -1,5 +1,5 @@
-Neuroshare G-Node Wine-Proxy Library
-====================================
+G-Node's Neuroshare Wine-Proxy Library
+======================================
 
 Use Neuroshare Libraries for Windows on Unix(-like) Systems.
 
@@ -87,6 +87,6 @@ standard error to a file:
 
     % program 2> error.log
 
-Currently there is no bug tracking system available thus
-the best option is to send a mail to:
-     kellner@bio.lmu.de
+Any bugs can and should be filed to the project's issue
+tracker at github:
+	https://github.com/G-Node/nswineproxy/issues

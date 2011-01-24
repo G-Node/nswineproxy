@@ -1115,6 +1115,8 @@ ns_GetEventData (uint32  file_id,
       return ns_res;
     }
 
+  *DataRetSize = DataSize;
+
   ns_msg_read_poly (reply,
 		    NS_TYPE_ARRAY, DataRetSize, Data,
 		    NS_TYPE_DOUBLE, TimeStamp,
@@ -1230,6 +1232,8 @@ ns_RESULT ns_GetAnalogData (uint32  file_id,
       ns_msg_free (reply);
       return ns_res;
     }
+
+  DataRetSize = sizeof (double) * IndexCount;
 
   ns_msg_read_poly (reply,
 		    NS_TYPE_ARRAY, &DataRetSize, Data,
@@ -1396,6 +1400,8 @@ ns_RESULT ns_GetSegmentData (uint32  file_id,
       return ns_res;
     }
 
+  DataRetSize = DataBufferSize;
+
   ns_msg_read_poly (reply,
 		    NS_TYPE_ARRAY, &DataRetSize, Data,
 		    NS_TYPE_DOUBLE, TimeStamp,
@@ -1495,6 +1501,8 @@ ns_RESULT ns_GetNeuralData (uint32  file_id,
       ns_msg_free (reply);
       return ns_res;
     }
+
+  DataRetSize = sizeof (double) * IndexCount;
 
   ns_msg_read_poly (reply,
 		    NS_TYPE_ARRAY, &DataRetSize, Data,

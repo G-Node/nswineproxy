@@ -781,7 +781,9 @@ ns_GetLibraryInfo (ns_LIBRARYINFO *LibraryInfo, uint32 LibraryInfoSize)
   LibraryInfo->dwFileDescCount = 0;
 
   ctx = get_library_context ();
-  g_debug ("Listening port: %u",  ctx->listen_port);
+
+  if (G_UNLIKELY (ctx->debug))
+    g_debug ("Listening port: %u", ctx->listen_port);
 
   return ns_OK;
 }

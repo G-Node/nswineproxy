@@ -1550,8 +1550,10 @@ ns_GetTimeByIndex (uint32  file_id,
       return ns_res;
     }
 
-  ns_msg_read_poly (reply, NS_TYPE_DOUBLE, &Time);
-
+  ns_msg_read_poly (reply,
+		    NS_TYPE_DOUBLE, Time,
+		    NS_TYPE_NONE);
+  
   return ns_OK;
 }
 
@@ -1596,7 +1598,9 @@ ns_GetIndexByTime (uint32  file_id,
       return ns_res;
     }
 
-  ns_msg_read_poly (reply, NS_TYPE_DOUBLE, &Index);
+  ns_msg_read_poly (reply,
+		    NS_TYPE_DOUBLE, Index,
+		    NS_TYPE_NONE);
 
   return ns_OK;
 }

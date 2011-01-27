@@ -858,11 +858,11 @@ ns_OpenFile (char *filename, uint32 *file_id)
   ns_msg_pack_string (msg, dll_location, -1);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
+
 
   if (res == FALSE)
     return ns_LIBERROR;
-
-  ns_msg_free (msg);
 
   if (ns_msg_is_error (reply))
     {
@@ -881,13 +881,13 @@ ns_OpenFile (char *filename, uint32 *file_id)
   g_free (path_win32);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
 
   if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -941,13 +941,13 @@ ns_GetFileInfo (uint32 file_id, ns_FILEINFO *FileInfo, uint32 FileInfoSize)
   ns_msg_pack_uint32 (msg, fh->remote_id);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-
+  ns_msg_free (msg);
+  
   if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1001,13 +1001,13 @@ ns_GetEntityInfo (uint32         file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
   
    if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1050,13 +1050,13 @@ ns_GetEventInfo (uint32        file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
   
-   if (reply == NULL)
+  if (reply == NULL)
     return ns_LIBERROR;
-
+  
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1103,13 +1103,13 @@ ns_GetEventData (uint32  file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-  
-   if (reply == NULL)
+  ns_msg_free (msg);
+
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1154,13 +1154,13 @@ ns_GetAnalogInfo (uint32        file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
   
-   if (reply == NULL)
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1221,13 +1221,13 @@ ns_RESULT ns_GetAnalogData (uint32  file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-  
-   if (reply == NULL)
+  ns_msg_free (msg);
+
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1271,13 +1271,13 @@ ns_GetSegmentInfo (uint32          file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
   
-   if (reply == NULL)
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1324,13 +1324,13 @@ ns_GetSegmentSourceInfo (uint32            file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
   
-   if (reply == NULL)
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1388,13 +1388,13 @@ ns_RESULT ns_GetSegmentData (uint32  file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
+  ns_msg_free (msg);
   
-   if (reply == NULL)
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1440,13 +1440,13 @@ ns_GetNeuralInfo (uint32         file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-  
-   if (reply == NULL)
+  ns_msg_free (msg);
+
+  if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1490,13 +1490,13 @@ ns_RESULT ns_GetNeuralData (uint32  file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-  
+  ns_msg_free (msg);
+	
    if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1538,13 +1538,13 @@ ns_GetTimeByIndex (uint32  file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-  
+  ns_msg_free (msg);
+
    if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;
@@ -1586,13 +1586,13 @@ ns_GetIndexByTime (uint32  file_id,
 		    NS_TYPE_NONE);
 
   reply = filehandle_send_and_receive (fh, msg, NULL);
-  
+  ns_msg_free (msg);  
+
    if (reply == NULL)
     return ns_LIBERROR;
 
   if (ns_msg_is_error (reply))
     {
-      ns_msg_free (msg);
       ns_res = ns_result_from_error_msg (fh, reply);
       ns_msg_free (reply);
       return ns_res;

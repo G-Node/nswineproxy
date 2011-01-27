@@ -989,8 +989,6 @@ process_get_time_by_index (NsMsg *msg)
 		    NS_TYPE_UINT32, &index,
 		    NS_TYPE_NONE);
 
-  reply = ns_msg_new_reply (msg, sizeof (double));
-
   ns_res = lib_handle.ns_GetTimeByIndex (the_file_id,
 					 entity_id,
 					 index,
@@ -998,11 +996,11 @@ process_get_time_by_index (NsMsg *msg)
 
   if (ns_res != ns_OK) 
     {
-      ns_msg_free (reply);
       reply = generate_error_reply (msg, ns_res);
       return reply;
     }
 
+  reply = ns_msg_new_reply (msg, sizeof (double));
   ns_msg_pack_double (reply, time);
   return reply;
 }

@@ -66,8 +66,8 @@ Installation of vendor DLLs
 
 It is very important to note that with without the
 installation of the vendor DLLs the library cannot read
-any data files. Therefore the the DLLs for must be
-downloaded and installed into one of the following
+any data files. Therefore the specific vendor DLL must
+be downloaded and installed into one of the following
 locations:
 	/usr/local/lib/neuroshare
 	/usr/lib/neuroshare
